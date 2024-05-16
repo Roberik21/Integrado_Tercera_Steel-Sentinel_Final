@@ -59,5 +59,14 @@ public class EnemyDamage : MonoBehaviour
 
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Objeto entró en el trigger");
+        if (other.CompareTag("Altar"))
+        {
+            Debug.Log("Enemy tocó el Altar y fue destruido");
+            Destroy(gameObject);
+        }
+    }
 
 }
