@@ -27,7 +27,7 @@ public class PlallerController : MonoBehaviour
     [SerializeField] bool isGrounded;
     [SerializeField] float groundDetectRadius = 0.1f;
     [SerializeField] LayerMask groundLayer;
-
+    [SerializeField] GameObject[] Enemy;
 
     //Valores privados
     Vector2 move;
@@ -137,4 +137,8 @@ public class PlallerController : MonoBehaviour
 
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Altar")){ Destroy(Enemy[0]); Destroy(Enemy[1]); Destroy(Enemy[2]); }
+    }
 }
