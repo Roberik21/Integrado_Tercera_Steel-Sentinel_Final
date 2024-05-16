@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 4870884869623392552}
   m_Layer: 7
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,9 +97,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.10000136
-  m_Height: 0.94089425
+  m_Height: 0.91090965
   m_Direction: 1
-  m_Center: {x: -0.0034144744, y: -0.5295529, z: 0}
+  m_Center: {x: -0.0034144744, y: -0.5145606, z: 0}
 --- !u!114 &5079512160532830633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,6 +517,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266731131779721489, guid: 2900109a48512644f901f3650f624e31,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7409964128200832566, guid: 2900109a48512644f901f3650f624e31,
         type: 3}
