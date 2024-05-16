@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class SpawnEnemy_3 : MonoBehaviour
@@ -11,12 +11,9 @@ public class SpawnEnemy_3 : MonoBehaviour
         get { return instance; }
     }
 
-
     public GameObject TheEnemy_1;
     public GameObject TheEnemy_2;
     public GameObject TheEnemy_3;
-    public int xPos;
-    public int zPos;
     public int enemyCounts;
     [SerializeField] int maxEnemies;
     [SerializeField] bool canSpawn;
@@ -29,30 +26,27 @@ public class SpawnEnemy_3 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(EnemyDrop());
-
+        canSpawn = true;
+        InvokeRepeating(nameof(SpawnEnemies), 1f, 1f); // Llama a SpawnEnemies cada segundo
     }
 
-    private void Update()
+    void SpawnEnemies()
     {
+        if (enemyCounts >= maxEnemies || !canSpawn) return;
 
-        if (enemyCounts < maxEnemies) { Spawn_3(); }
-    }
-
-    IEnumerator EnemyDrop()
-    {
-        while (enemyCounts < 10)//Numero de enemigos
+        int randomZone = Random.Range(1, 4);
+        switch (randomZone)
         {
-            xPos = Random.Range(-26, -30);//Limite de rango en X del Spawn
-            zPos = Random.Range(-6, 10);//Limite de rango en Z del Spawn
-            Instantiate(TheEnemy_1, new Vector3(xPos, 0.75f, zPos), Quaternion.identity);//Cambiar el 43 por la altura donde respawnea el enemigo
-            Instantiate(TheEnemy_2, new Vector3(xPos, 0.75f, zPos), Quaternion.identity);
-            Instantiate(TheEnemy_3, new Vector3(xPos, 0.75f, zPos), Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);//Tiempo que tienen de aparecer unos a otros
-            enemyCounts += 1;
-
+            case 1:
+                Spawn_1();
+                break;
+            case 2:
+                Spawn_2();
+                break;
+            case 3:
+                Spawn_3();
+                break;
         }
-
     }
 
     void Spawn_1()
@@ -60,13 +54,11 @@ public class SpawnEnemy_3 : MonoBehaviour
         if (canSpawn)
         {
             canSpawn = false;
-            xPos = Random.Range(-26, -30);//Limite de rango en X del Spawn
-            zPos = Random.Range(-6, 10);//Limite de rango en Z del Spawn
-            int nEnemy = Random.Range(1, 3);
+            int xPos = Random.Range(-30, -26);
+            int zPos = Random.Range(-6, 10);
+            int nEnemy = Random.Range(1, 4);
             Debug.Log(nEnemy);
-            if (nEnemy == 1) { Instantiate(TheEnemy_1, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); } //Cambiar el 43 por la altura donde respawnea el enemigo
-            if (nEnemy == 2) { Instantiate(TheEnemy_2, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); }
-            if (nEnemy == 3) { Instantiate(TheEnemy_3, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); }
+            InstantiateEnemy(nEnemy, xPos, zPos);
             enemyCounts += 1;
             Invoke(nameof(ResetSpawn), 1f);
         }
@@ -77,13 +69,11 @@ public class SpawnEnemy_3 : MonoBehaviour
         if (canSpawn)
         {
             canSpawn = false;
-            xPos = Random.Range(-26, -30);//Limite de rango en X del Spawn
-            zPos = Random.Range(6, -2);//Limite de rango en Z del Spawn
-            int nEnemy = Random.Range(1, 3);
+            int xPos = Random.Range(-30, -26);
+            int zPos = Random.Range(-2, 6);
+            int nEnemy = Random.Range(1, 4);
             Debug.Log(nEnemy);
-            if (nEnemy == 1) { Instantiate(TheEnemy_1, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); } //Cambiar el 43 por la altura donde respawnea el enemigo
-            if (nEnemy == 2) { Instantiate(TheEnemy_2, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); }
-            if (nEnemy == 3) { Instantiate(TheEnemy_3, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); }
+            InstantiateEnemy(nEnemy, xPos, zPos);
             enemyCounts += 1;
             Invoke(nameof(ResetSpawn), 1f);
         }
@@ -94,16 +84,32 @@ public class SpawnEnemy_3 : MonoBehaviour
         if (canSpawn)
         {
             canSpawn = false;
-            xPos = Random.Range(10, -6);//Limite de rango en X del Spawn
-            zPos = Random.Range(42, 34);//Limite de rango en Z del Spawn
-            int nEnemy = Random.Range(1, 3);
+            int xPos = Random.Range(-6, 10);
+            int zPos = Random.Range(34, 42);
+            int nEnemy = Random.Range(1, 4);
             Debug.Log(nEnemy);
-            if (nEnemy == 1) { Instantiate(TheEnemy_1, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); } //Cambiar el 43 por la altura donde respawnea el enemigo
-            if (nEnemy == 2) { Instantiate(TheEnemy_2, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); }
-            if (nEnemy == 3) { Instantiate(TheEnemy_3, new Vector3(xPos, 0.75f, zPos), Quaternion.identity); }
+            InstantiateEnemy(nEnemy, xPos, zPos);
             enemyCounts += 1;
             Invoke(nameof(ResetSpawn), 1f);
         }
+    }
+
+    void InstantiateEnemy(int nEnemy, int xPos, int zPos)
+    {
+        GameObject enemy = null;
+        switch (nEnemy)
+        {
+            case 1:
+                enemy = TheEnemy_1;
+                break;
+            case 2:
+                enemy = TheEnemy_2;
+                break;
+            case 3:
+                enemy = TheEnemy_3;
+                break;
+        }
+        Instantiate(enemy, new Vector3(xPos, 0.75f, zPos), Quaternion.identity);
     }
 
     void ResetSpawn()
@@ -111,3 +117,4 @@ public class SpawnEnemy_3 : MonoBehaviour
         canSpawn = true;
     }
 }
+
