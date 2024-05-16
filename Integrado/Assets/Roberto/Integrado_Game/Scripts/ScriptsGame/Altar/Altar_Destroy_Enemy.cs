@@ -5,13 +5,14 @@ using UnityEngine;
 public class Altar_Destroy_Enemy : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
-      {
-            // Verifica si el objeto que entra en el trigger tiene la etiqueta "enemy"
-            if (other.CompareTag("Enemy"))
-            {
-                // Destruye el objeto con la etiqueta "enemy"
-                Destroy(other.gameObject);
-            }
-      }
-    
+    {
+        Debug.Log("Objeto entró en el trigger");
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy detectado y destruido");
+            Destroy(other.gameObject);
+        }
+    }
 }
+    
+
